@@ -12,11 +12,27 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include "libft/libft.h"
+#define STACK_LEN 1000
+
+typedef struct s_stack
+//an array where the first element is the bottom of the stack
+{
+	int	val[STACK_LEN];
+	// int top;
+	int	size;
+}	t_stack;
+
 
 int	main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
-	// Your code here to handle the push_swap logic
+	t_stack	a;
+	t_stack	b;
+	
+	if (argc < 2)
+		return ( ft_putstr("Error\n"), 1);
+	if (! input_vals(argv, &a))
+		return ( ft_putstr("Error\n"), 2);
+	find_solution(&a, &b);
 	return (0);
 }
