@@ -1,0 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/07 20:17:33 by pvolikov          #+#    #+#             */
+/*   Updated: 2025/09/07 20:19:29 by pvolikov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft/libft.h"
+#include "push_swap.h"
+
+void	ft_test(int	res)
+{
+	if (res) ft_putstr("OK");
+	else ft_putstr("NOK");
+}
+
+int	main()
+{
+	int	a0[]={0, 1, 4, 5, 8};
+	int	a1[]={1, 5, 4, 8, 0};
+	int	a2[]={0, 1, 4, 8, 5};
+	int	a3[]={10, 1, 4, 8, 5};
+	
+	ft_putendl("Testing is_sorted()...");
+	//print_arr(a0, 5);
+	//ft_putchar('\n');
+	ft_putstr("1:");
+	ft_test(is_sorted(a0, 5) == 1);
+
+	//print_arr(a1, 5);
+	//ft_putchar('\n');
+	ft_putstr(" 2:");
+	ft_test(is_sorted(a1, 5) == 0);
+
+	//print_arr(a2, 5);
+	//ft_putchar('\n');
+	ft_putstr(" 3:");
+	ft_test(is_sorted(a2, 5) == 0);
+		
+	ft_putstr(" 4:");
+	ft_test(is_sorted(a3, 5) == 0);
+
+	ft_putendl("");
+
+	print_arr(a2, 5);
+	ft_putchar('\n');
+	ft_putstr("a2 is ");
+	if (is_sorted(a2, 5))
+		ft_putendl("sorted");
+		else
+		ft_putendl("unsorted");
+	bubble_sort(a2, 5);
+	print_arr(a2, 5);	
+}

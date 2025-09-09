@@ -4,8 +4,11 @@ CC = cc
 # CFLAGS = -Wall -Wextra -I $(INCL)
 # CFLAGS = -Wall -Wextra -Werror -I $(INCL)
 CFLAGS = -Wall -Wextra -Werror
-MODS = ft_printf \
-		conversion
+MODS = push_swap \
+		stacks	\
+		histacks	\
+		sort \
+		utils
 # VPATH = srcs
 # NAMEOBJS = ft_putchar.o ft_swap.o ft_putstr.o ft_strlen.o ft_strcmp.o
 # NAMEOBJS = $(addprefix ft_,$(FUNCS))
@@ -19,13 +22,14 @@ TGT = push_swap
 .PHONY:	all clean fclean re test
 all :	$(TGT)
 
-$(TGT): 
-#	$(CC) $(CFLAGS) -c %@.c -o $@ $< -Llibft -lft
-	$(CC) $(CFLAGS) %@.c -o $@
+$(TGT): $(OBJS)
+#	$(CC) $(CFLAGS) -c $@.c -o $@ $< -Llibft -lft
+	$(CC) $(CFLAGS) -o $@ $(OBJS) -Llibft -lft
 	
 %.o: %.c *.h 
 #	cd libft; make
-	$(CC) $(CFLAGS) -c %@.c -o $@ $< -Llibft -lft
+#	$(CC) $(CFLAGS) -c $@.c -o $@ $< -Llibft -lft
+	$(CC) $(CFLAGS) -c $< -Llibft -lft
 
 # libft.a :	$(OBJS)
 #	ar rcs libft.a $(OBJS)
@@ -34,7 +38,7 @@ $(TGT):
 #	$(CC) -c $(CFLAGS) -o $@ $<
 
 # ($OBJS) : $(INCL)/ft.h
-# $(CC) -c $(CFLAGS) $< -o $@
+#	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
 	rm -f *.o
@@ -45,5 +49,5 @@ fclean : clean
 re : fclean all
 
 test: $(TGTLIB)
-	$(CC) $(CFLAGS) -o test test.c -L. -lftprintf
+	$(CC) $(CFLAGS) -o test test.c -Llibft -lft
 	./test

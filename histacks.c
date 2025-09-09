@@ -1,68 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stacks.c                                           :+:      :+:    :+:   */
+/*   histacks.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/07 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/07 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Created: 2025/09/08 20:17:33 by pvolikov          #+#    #+#             */
+/*   Updated: 2025/09/08 20:19:29 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "push_swap.h"
 
-void	print_stack(const t_stack *s)
+
+int	push(t_stack *dst, t_stack *idst, t_stack *src, t_stack *isrc)
 {
-	int	i;
-
-	ft_putstr("Len=");
-	ft_putnbr(s->size);
-	ft_putchar(':');
-	i = 0;
-	while (i < s->size)
-	{
-		ft_putnbr(s->val[i]);
-		if (i != s->size)
-			ft_putchar(' ');
-		i++;
-	}
-}
-
-int	copy_stack(t_stack *dst, const t_stack *src)
-{
-	int	i;
-
-	i = 0; 
-	while (i < src->size)
-	{
-		//ft_putnbr(src->val[i]);
-		//ft_putchar(';');
-		dst->val[i] = src->val[i];
-		i++;
-	}
-	dst->size = src->size;
-	return (i);
-}
-
-int	xpush_stack(t_stack *dst, t_stack *src)
-{
-	if (src->size < 1)
-	{
-		err("Source stack underflow\n");
-		return (0);
-	}
-	if (dst->size == STACK_LEN)
-	{
-		err("Dest stack overflow\n");
-		return (0);
-	}
-	dst->val[dst->size++] = pop_stack(src);
+	xpush_stack(dst, src);
+	xpush_stack(idst, isrc);
 	return (1);
 }
 
-int	pop_stack(t_stack *s)
+int	pop(t_stack *s)
 {
 	if (s->size < 1)
 	{
@@ -72,7 +31,7 @@ int	pop_stack(t_stack *s)
 	return (s->val[--s->size]);
 }
 
-int	rot_stack(t_stack *s)
+int	rot(t_stack *s)
 {
 	int	tmp;
 	int i;
@@ -91,7 +50,7 @@ int	rot_stack(t_stack *s)
 	return (1);
 }
 
-int	rrot_stack(t_stack *s)
+int	rrot(t_stack *s)
 {
 	int	tmp;
 	int i;

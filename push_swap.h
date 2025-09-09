@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -24,11 +23,29 @@ typedef struct s_stack
 	int	size;
 }	t_stack;
 
+typedef struct s_stackf
+// stack with additional features (sorting index of elements)
+{
+	t_stack	main;
+	t_stack idx;
+}	t_stackf;
 
-void	print_stack(t_stack s); 
-int push(t_stack *s); 
-int	pop(t_stack *s);
-int	rot(t_stack *s);
-int	rrot(t_stack *s);
+void	print_stack(const t_stack *s);
+int		copy_stack(t_stack *dst, const t_stack *src);
+int		xpush_stack(t_stack *dst, t_stack *src);
+int		pop_stack(t_stack *s);
+int		rot_stack(t_stack *s);
+int		rrot_stack(t_stack *s);
+
+int		is_sorted(int* arr, int n);
+void	bubble_sort(int* arr, int n);
+void	bubble_rsort(int* arr, int n);
+void	print_arr(int* arr, int n);
+int		find_value(int value, int *arr, int n);
+
+void	debug(char *s);
+void	err(char *s);
+
+void	sip_approach(t_stack *a, t_stack *b, t_stack *ai);
 
 #endif
