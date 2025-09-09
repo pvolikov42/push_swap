@@ -13,6 +13,11 @@
 #include "libft/libft.h"
 #include "push_swap.h"
 
+void	init_stack(t_stack *s)
+{
+	s->size = 0;
+}
+
 void	print_stack(const t_stack *s)
 {
 	int	i;

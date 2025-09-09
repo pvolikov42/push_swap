@@ -25,17 +25,24 @@ typedef struct s_stack
 
 typedef struct s_stackf
 // stack with additional features (sorting index of elements)
+// idx.size should be ignored
 {
-	t_stack	main;
-	t_stack idx;
+	t_stack	*stk;
+	t_stack	*idx;
 }	t_stackf;
 
+void	init_stack(t_stack *s);
 void	print_stack(const t_stack *s);
 int		copy_stack(t_stack *dst, const t_stack *src);
 int		xpush_stack(t_stack *dst, t_stack *src);
 int		pop_stack(t_stack *s);
 int		rot_stack(t_stack *s);
 int		rrot_stack(t_stack *s);
+void	init(t_stackf *s, t_stack *stk, t_stack *idx);
+int		xpush(t_stackf *dst, t_stackf *src);
+int		pop(t_stackf *s);
+int		rot(t_stackf *s);
+int		rrot(t_stackf *s);
 
 int		is_sorted(int* arr, int n);
 void	bubble_sort(int* arr, int n);
@@ -46,6 +53,6 @@ int		find_value(int value, int *arr, int n);
 void	debug(char *s);
 void	err(char *s);
 
-void	sip_approach(t_stack *a, t_stack *b, t_stack *ai);
+//void	sip_approach(t_stack *a, t_stack *b, t_stack *ai);
 
 #endif

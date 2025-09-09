@@ -13,58 +13,36 @@
 #include "libft/libft.h"
 #include "push_swap.h"
 
-
-int	push(t_stack *dst, t_stack *idst, t_stack *src, t_stack *isrc)
+void init(t_stackf *s, t_stack *stk, t_stack *idx)
 {
-	xpush_stack(dst, src);
-	xpush_stack(idst, isrc);
-	return (1);
+	init_stack(stk);
+	s->stk = stk;
+	init_stack(idx);
+	s->idx = idx;
 }
 
-int	pop(t_stack *s)
+int	xpush(t_stackf *dst, t_stackf *src)
 {
-	if (s->size < 1)
-	{
-		err("Stack underflow\n");
-		return (0);
-	}
-	return (s->val[--s->size]);
+//	err("xp1");
+//	xpush_stack(dst->stk, src->stk);
+//	err("xp2");
+//	xpush_stack(dst->idx, src->idx);
+//	err("xp3");
+//	return(1);
+	return (xpush_stack(dst->stk, src->stk) & xpush_stack(dst->idx, src->idx));
 }
 
-int	rot(t_stack *s)
+int	pop(t_stackf *s)
 {
-	int	tmp;
-	int i;
-
-	if (s->size < 2)
-		return (1);
-	tmp = s->val[0];
-	s->val[0] = s->val[s->size - 1];
-	i = s->size;
-	while (i > 1)
-	{ 
-		s->val[i] = s->val[i - 1];
-		i--;
-	}
-	s->val[1] = tmp;
-	return (1);
+	return (s->stk->val[--s->stk->size]);
 }
 
-int	rrot(t_stack *s)
+int	rot(t_stackf *s)
 {
-	int	tmp;
-	int i;
+	return (rot_stack(s->stk) & rot_stack(s->idx));
+}
 
-	if (s->size < 2)
-		return (1);
-	tmp = s->val[s->size - 1];
-	s->val[s->size - 1] = s->val[0];
-	i = 0;
-	while (i < s->size - 1)
-	{ 
-		s->val[i] = s->val[i + 1];
-		i++;
-	}
-	s->val[0] = tmp;
-	return (1);
+int	rrot(t_stackf *s)
+{
+	return (rrot_stack(s->stk) & rrot_stack(s->idx));
 }

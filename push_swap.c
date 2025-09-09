@@ -15,11 +15,6 @@
 #include "libft/libft.h"
 #include "push_swap.h"
 
-void	init_stack(t_stack *s)
-{
-	s->size = 0;
-}
-
 void	find_solution(t_stack *a, t_stack *b)
 //not just a stub
 {
@@ -48,7 +43,38 @@ void	find_solution(t_stack *a, t_stack *b)
 	ft_putendl("\nrr\nrrr");
 }
 
-void	sip_approach(t_stack *a, t_stack *b, t_stack *ai)
+void	find_solution2(t_stackf *aa, t_stackf *bb)
+//not just a stub
+{
+	int		i;
+	//t_stack	bi;
+	//t_stack	t;
+	
+	copy_stack(bb->stk, aa->stk);
+	bubble_rsort(bb->stk->val, bb->stk->size);
+	i = 0;
+	while (i < aa->stk->size)
+	{
+		aa->idx->val[i] = find_value(aa->stk->val[i], bb->stk->val, aa->stk->size);
+		i++;
+	}
+	aa->idx->size = i;
+	ft_putstr("a indexed: ");
+//	ft_putendl("point1");
+	print_stack(aa->idx);
+	init_stack(bb->stk);
+//	ft_putendl("point3");
+	xpush(bb, aa);
+//	ft_putendl("point4");
+	rot(aa);
+//	ft_putendl("point5");
+//	rot(aa);
+//	xpush_stack(b, a);
+//	sip_approach(a, b, &ai);
+	ft_putendl("\nrr\nrrr");
+}
+
+void	sip_approach(t_stackf *aa, t_stackf *bb)
 {
 	int	i;
 	int	j;
@@ -58,31 +84,35 @@ void	sip_approach(t_stack *a, t_stack *b, t_stack *ai)
 
 	counter = 0;
 	i = 0;
-	num = a->size;
+	num = aa->stk->size;
 	while (i < num - 1)
 	{
-		pos = find_value(i, ai->val, ai->size);
+		pos = find_value(i, aa->idx->val, aa->idx->size);
 		j = 0;
-		if (pos > a->size / 2)  //-2
-			while (j < a->size - pos)
+		if (pos > aa->stk->size / 2)  //-2
+			while (j < aa->stk->size - pos)
 			{
-				rot_stack(a);
-				rot_stack(ai);
+				rot(aa);
+				//rot_stack(a);
+				//rot_stack(ai);
 				counter++;
 				j++;
 			}
 		else
 			while (j < pos)
 			{
-				rrot_stack(a);
-				rrot_stack(ai);
+				rrot(aa);
+				//rrot_stack(a);
+				//rrot_stack(ai);
 				counter++;
 				j++;
 			}
-		xpush_stack(b, a);
+		xpush(bb, aa);
+		//xpush_stack(b, a);
 		counter++;
 		i++;
 	}
+	ft_putstr("Number of operations: ");
 	ft_putnbr(counter);
 }
 
@@ -104,13 +134,17 @@ int	main(int argc, char **argv)
 {
 	t_stack	a;
 	t_stack	b;
-//	t_stackf aa;
-//	t_stackf bb;
+	t_stack	ai;
+	t_stack	bi;
+	t_stackf aa;
+	t_stackf bb;
 
 	if (argc < 2)
 		return (ft_putstr("Error\n"), 1);
 	init_stack(&a);
 	init_stack(&b);
+	init(&aa, &a, &ai);
+	init(&bb, &b, &bi);
 	if (! input_vals(argv, &a))
 		return (ft_putstr("Error\n"), 2);
 	ft_putendl("Start");
@@ -120,7 +154,8 @@ int	main(int argc, char **argv)
 	ft_putstr("b: ");
 	print_stack(&b);
 	ft_putchar('\n');
-	find_solution(&a, &b);
+//	find_solution(&a, &b);
+	find_solution2(&aa, &bb);
 	ft_putendl("Finish");
 	ft_putstr("a: ");
 	print_stack(&a);
