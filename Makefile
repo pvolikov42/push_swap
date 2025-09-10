@@ -7,6 +7,7 @@ CFLAGS = -Wall -Wextra -Werror
 MODS = push_swap \
 		stacks	\
 		histacks	\
+		hiops	\
 		sort \
 		utils
 # VPATH = srcs

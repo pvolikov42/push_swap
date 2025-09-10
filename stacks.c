@@ -88,6 +88,17 @@ int	peek_stack(t_stack *s)
 	return (s->val[s->size - 1]);
 }
 
+int	swap_stack(t_stack *s)
+{
+	int	tmp;
+
+	if (s->size < 2)
+		return (0);
+	tmp = s->val[s->size - 1];
+	s->val[s->size - 1] = s->val[s->size - 2];
+	s->val[s->size - 2] = tmp;
+	return (1);
+}
 
 int	rot_stack(t_stack *s)
 {
@@ -125,4 +136,22 @@ int	rrot_stack(t_stack *s)
 	}
 	s->val[s->size - 2] = tmp;
 	return (1);
+}
+
+int	count_monotonic_sequences(const t_stack *s)
+{
+	int	i;
+	int	count;
+
+	if (!s || s->size == 0)
+		return (0);
+	count = 1;
+	i = 1;
+	while (i < s->size)
+	{
+		if (s->val[i] < s->val[i - 1])
+			count++;
+		i++;
+	}
+	return (count);
 }

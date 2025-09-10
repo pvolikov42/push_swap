@@ -16,6 +16,7 @@
 #include "push_swap.h"
 
 void	sip_approach(t_stackf *aa, t_stackf *bb)
+//doesn't move the last element
 {
 	int	i;
 	int	j;
@@ -47,8 +48,41 @@ void	sip_approach(t_stackf *aa, t_stackf *bb)
 		// xpush_stack(b, a);
 		counter++;
 	}
-	ft_putstr("Number of operations: ");
-	ft_putnbr(counter);
+	//ft_putstr("Number of operations: ");
+	//ft_putnbr(counter);
+	//ft_putchar('\n');
+}
+
+void	rsip_approach(t_stackf *aa, t_stackf *bb)
+// sips all elements
+{
+	int	i;
+	int	j;
+	int pos;
+	int dir;
+	int num;
+
+	i = 0;
+	num = aa->stk->size;
+	while (i < num)
+	{
+		pos = find_value(i, aa->idx->val, aa->idx->size);
+		if (pos == -1)  
+		{
+			i++;  // only change after all equal entries are processed
+			continue ;
+		}
+		dir = pos > (aa->stk->size - 2) / 2;
+		while (aa->idx->val[aa->stk->size - 1] != i)
+		{
+			if (dir) 
+				rot(aa);
+			else
+				rrot(aa);
+			j++;
+		}
+		xpush(bb, aa);
+	}
 }
 
 void	find_solution(t_stack *a, t_stack *b)
@@ -82,16 +116,25 @@ void	find_solution(t_stack *a, t_stack *b)
 void	find_solution2(t_stackf *aa, t_stackf *bb)
 //not just a stub
 {
-	//int		i;
-	//t_stack	bi;
-	//t_stack	t;
-	
-	mkidx(aa);
-	ft_putstr("a indexed: ");
-	print_stack(aa->idx);
-//	ft_putendl("point1");
 	sip_approach(aa, bb);
-	ft_putendl("\nrr\nrrr");
+	dump(bb, aa);
+}
+
+void	find_solution3(t_stackf *aa, t_stackf *bb)
+{
+	dump_second_half(aa, bb);
+	ft_putendl("after dump_second_half");
+	print_stk(aa);
+	print_stk(bb);
+	sip_approach(aa, bb);
+	ft_putendl("after sip_approach(aa, bb)");
+	print_stk(aa);
+	print_stk(bb);
+	rsip_approach(bb, aa);
+	ft_putendl("after rsip_approach(bb, aa)");
+	print_stk(aa);
+	print_stk(bb);
+	dump(bb, aa);
 }
 
 int	input_vals(char **argv, t_stack *s)
@@ -126,14 +169,16 @@ int	main(int argc, char **argv)
 	init_stack(&b);
 	init(&aa, &a, &ai);
 	init(&bb, &b, &bi);
-	if (! input_vals(argv, &a))
+	if (! input_vals(++argv, &a))
 		return (ft_putstr("Error\n"), 2);
+	mkidx(&aa);
 	ft_putendl("Start a:");
 	print_stk(&aa);
 	ft_putendl("Start b:");
 	print_stk(&bb);
 //	find_solution(&a, &b);
-	find_solution2(&aa, &bb);
+//	find_solution2(&aa, &bb);
+	find_solution3(&aa, &bb);
 /*    mkidx(&aa);
 	print_stk(&aa);
 	print_stk(&bb);

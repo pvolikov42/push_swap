@@ -39,14 +39,21 @@ int		pop_stack(t_stack *s);
 int		peek_stack(t_stack *s);
 int		rot_stack(t_stack *s);
 int		rrot_stack(t_stack *s);
+int		swap_stack(t_stack *s);
+int		count_monotonic_sequences(const t_stack *s);
+
 void	init(t_stackf *s, t_stack *stk, t_stack *idx);
-void	print_stk(t_stackf *s);
+void	print_stk(const t_stackf *s);
 void	mkidx(t_stackf *s);
 int		xpush(t_stackf *dst, t_stackf *src);
 int		pop(t_stackf *s);
 int		peek(t_stackf *s);
 int		rot(t_stackf *s);
 int		rrot(t_stackf *s);
+int		swap(t_stackf *s);
+int		dump(t_stackf *src, t_stackf *dst);
+
+int		dump_second_half(t_stackf *src, t_stackf *dst);
 
 int		is_sorted(int* arr, int n);
 void	bubble_sort(int* arr, int n);
