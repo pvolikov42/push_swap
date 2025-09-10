@@ -15,6 +15,42 @@
 #include "libft/libft.h"
 #include "push_swap.h"
 
+void	sip_approach(t_stackf *aa, t_stackf *bb)
+{
+	int	i;
+	int	j;
+	int pos;
+	int counter;
+	int dir;
+
+	counter = 0;
+	i = aa->stk->size - 1;
+	while (i > 0)
+	{
+		pos = find_value(i, aa->idx->val, aa->idx->size);
+		if (pos == -1)  
+		{
+			i--;  // only decrease after all equal entries are moved
+			continue ;
+		}
+		dir = pos > (aa->stk->size - 2) / 2;
+		while (aa->idx->val[aa->stk->size - 1] != i)
+		{
+			if (dir) 
+				rot(aa);
+			else
+				rrot(aa);
+			counter++;
+			j++;
+		}
+		xpush(bb, aa);
+		// xpush_stack(b, a);
+		counter++;
+	}
+	ft_putstr("Number of operations: ");
+	ft_putnbr(counter);
+}
+
 void	find_solution(t_stack *a, t_stack *b)
 //not just a stub
 {
@@ -46,88 +82,33 @@ void	find_solution(t_stack *a, t_stack *b)
 void	find_solution2(t_stackf *aa, t_stackf *bb)
 //not just a stub
 {
-	int		i;
+	//int		i;
 	//t_stack	bi;
 	//t_stack	t;
 	
-	copy_stack(bb->stk, aa->stk);
-	bubble_rsort(bb->stk->val, bb->stk->size);
-	i = 0;
-	while (i < aa->stk->size)
-	{
-		aa->idx->val[i] = find_value(aa->stk->val[i], bb->stk->val, aa->stk->size);
-		i++;
-	}
-	aa->idx->size = i;
+	mkidx(aa);
 	ft_putstr("a indexed: ");
-//	ft_putendl("point1");
 	print_stack(aa->idx);
-	init_stack(bb->stk);
-//	ft_putendl("point3");
-	xpush(bb, aa);
-//	ft_putendl("point4");
-	rot(aa);
-//	ft_putendl("point5");
-//	rot(aa);
-//	xpush_stack(b, a);
-//	sip_approach(a, b, &ai);
+//	ft_putendl("point1");
+	sip_approach(aa, bb);
 	ft_putendl("\nrr\nrrr");
-}
-
-void	sip_approach(t_stackf *aa, t_stackf *bb)
-{
-	int	i;
-	int	j;
-	int	num;
-	int pos;
-	int counter;
-
-	counter = 0;
-	i = 0;
-	num = aa->stk->size;
-	while (i < num - 1)
-	{
-		pos = find_value(i, aa->idx->val, aa->idx->size);
-		j = 0;
-		if (pos > aa->stk->size / 2)  //-2
-			while (j < aa->stk->size - pos)
-			{
-				rot(aa);
-				//rot_stack(a);
-				//rot_stack(ai);
-				counter++;
-				j++;
-			}
-		else
-			while (j < pos)
-			{
-				rrot(aa);
-				//rrot_stack(a);
-				//rrot_stack(ai);
-				counter++;
-				j++;
-			}
-		xpush(bb, aa);
-		//xpush_stack(b, a);
-		counter++;
-		i++;
-	}
-	ft_putstr("Number of operations: ");
-	ft_putnbr(counter);
 }
 
 int	input_vals(char **argv, t_stack *s)
 //stub
 {
-	(void)argv;
-	s->size = 6;
-	s->val[0] = 1;
-	s->val[1] = 111;
-	s->val[2] = 22;
-	s->val[3] = 24;
-	s->val[4] = 27;
-	s->val[5] = 29;
-	return (1);
+	int	i;
+	
+	i = 0;
+//	(void)argv;
+	while (*argv)
+	{
+		//ft_putendl(*argv);
+		s->val[i++] = ft_atoi(*argv);
+		argv++;
+	}
+	s->size = i;
+	return (i);
 }
 
 int	main(int argc, char **argv)
@@ -147,21 +128,24 @@ int	main(int argc, char **argv)
 	init(&bb, &b, &bi);
 	if (! input_vals(argv, &a))
 		return (ft_putstr("Error\n"), 2);
-	ft_putendl("Start");
-	ft_putstr("a: ");
-	print_stack(&a);
-	ft_putchar('\n');
-	ft_putstr("b: ");
-	print_stack(&b);
-	ft_putchar('\n');
+	ft_putendl("Start a:");
+	print_stk(&aa);
+	ft_putendl("Start b:");
+	print_stk(&bb);
 //	find_solution(&a, &b);
 	find_solution2(&aa, &bb);
-	ft_putendl("Finish");
-	ft_putstr("a: ");
-	print_stack(&a);
-	ft_putchar('\n');
-	ft_putstr("b: ");
-	print_stack(&b);
-	ft_putchar('\n');
+/*    mkidx(&aa);
+	print_stk(&aa);
+	print_stk(&bb);
+	rrot(&aa);
+	xpush(&bb, &aa);
+	xpush(&bb, &aa);
+	rot(&aa);
+	print_stk(&aa);
+	rot(&aa); */
+	ft_putendl("Finish a:");
+	print_stk(&aa);
+	ft_putendl("Finish b: ");
+	print_stk(&bb);
 	return (0);
 }

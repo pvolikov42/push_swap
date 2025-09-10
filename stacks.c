@@ -33,6 +33,7 @@ void	print_stack(const t_stack *s)
 			ft_putchar(' ');
 		i++;
 	}
+	ft_putstr(">\n");
 }
 
 int	copy_stack(t_stack *dst, const t_stack *src)
@@ -74,8 +75,19 @@ int	pop_stack(t_stack *s)
 		err("Stack underflow\n");
 		return (0);
 	}
-	return (s->val[--s->size]);
+	return (s->val[--(s->size)]);
 }
+
+int	peek_stack(t_stack *s)
+{
+	if (s->size < 1)
+	{
+		err("Stack underflow\n");
+		return (0);
+	}
+	return (s->val[s->size - 1]);
+}
+
 
 int	rot_stack(t_stack *s)
 {
@@ -111,6 +123,6 @@ int	rrot_stack(t_stack *s)
 		s->val[i] = s->val[i + 1];
 		i++;
 	}
-	s->val[0] = tmp;
+	s->val[s->size - 2] = tmp;
 	return (1);
 }

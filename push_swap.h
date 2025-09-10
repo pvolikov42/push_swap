@@ -36,11 +36,15 @@ void	print_stack(const t_stack *s);
 int		copy_stack(t_stack *dst, const t_stack *src);
 int		xpush_stack(t_stack *dst, t_stack *src);
 int		pop_stack(t_stack *s);
+int		peek_stack(t_stack *s);
 int		rot_stack(t_stack *s);
 int		rrot_stack(t_stack *s);
 void	init(t_stackf *s, t_stack *stk, t_stack *idx);
+void	print_stk(t_stackf *s);
+void	mkidx(t_stackf *s);
 int		xpush(t_stackf *dst, t_stackf *src);
 int		pop(t_stackf *s);
+int		peek(t_stackf *s);
 int		rot(t_stackf *s);
 int		rrot(t_stackf *s);
 
