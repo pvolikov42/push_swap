@@ -16,7 +16,8 @@
 #include "push_swap.h"
 
 void	sip_approach(t_stackf *aa, t_stackf *bb)
-//doesn't move the last element
+//move all elements of stack aa to stack bb in descending order
+// next element are looked for by rotating or revrotating aa
 {
 	int	i;
 	int	j;
@@ -26,7 +27,7 @@ void	sip_approach(t_stackf *aa, t_stackf *bb)
 
 	counter = 0;
 	i = aa->stk->size - 1;
-	while (i > 0)
+	while (i >= 0)
 	{
 		pos = find_value(i, aa->idx->val, aa->idx->size);
 		if (pos == -1)  
@@ -134,8 +135,12 @@ void	find_solution3(t_stackf *aa, t_stackf *bb)
 	ft_putendl("after rsip_approach(bb, aa)");
 	print_stk(aa);
 	print_stk(bb);
-	dump(bb, aa);
+	//dump(bb, aa);
 }
+/*
+void	find_solution4(t_stackf *aa, t_stackf *bb)
+{
+}*/
 
 int	input_vals(char **argv, t_stack *s)
 //stub
