@@ -85,6 +85,38 @@ int	is_sorted(int *arr, int n)
 	return (1);
 }
 
+int	nonascention(int *arr, int n)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (i < n - 1) 
+	{
+		if (arr[i] > arr[i + 1])
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+int	nondescention(int *arr, int n)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (i < n - 1) 
+	{
+		if (arr[i] < arr[i + 1])
+			count++;
+		i++;
+	}
+	return (count);
+}
+
 int find_value(int value, int *arr, int n)
 {
 	int	i;

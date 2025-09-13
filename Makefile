@@ -4,8 +4,8 @@ CC = cc
 # CFLAGS = -Wall -Wextra -I $(INCL)
 # CFLAGS = -Wall -Wextra -Werror -I $(INCL)
 CFLAGS = -Wall -Wextra -Werror
-MODS = push_swap \
-		stacks	\
+# MODS = push_swap 
+MODS = stacks	\
 		histacks	\
 		hiops	\
 		sort \
@@ -23,9 +23,9 @@ TGT = push_swap
 .PHONY:	all clean fclean re test
 all :	$(TGT)
 
-$(TGT): $(OBJS)
+$(TGT): $(OBJS) $(TGT).o
 #	$(CC) $(CFLAGS) -c $@.c -o $@ $< -Llibft -lft
-	$(CC) $(CFLAGS) -o $@ $(OBJS) -Llibft -lft
+	$(CC) $(CFLAGS) -o $@ $(TGT).o $(OBJS) -Llibft -lft
 	
 %.o: %.c *.h 
 #	cd libft; make
@@ -42,13 +42,13 @@ $(TGT): $(OBJS)
 #	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
-	rm -f *.o
+	rm -f $(TGT)
 
 fclean : clean
-	rm -f a.out
+	rm -f *.o
 
 re : fclean all
 
-test: $(TGTLIB)
-	$(CC) $(CFLAGS) -o test test.c -Llibft -lft
+test: $(OBJS)
+	$(CC) $(CFLAGS) -o test test.c $(OBJS) -Llibft -lft
 	./test

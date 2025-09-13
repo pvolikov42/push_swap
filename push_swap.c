@@ -137,10 +137,78 @@ void	find_solution3(t_stackf *aa, t_stackf *bb)
 	print_stk(bb);
 	//dump(bb, aa);
 }
-/*
+
 void	find_solution4(t_stackf *aa, t_stackf *bb)
 {
-}*/
+	int	thr;
+
+	thr = (aa->stk->size - 1) / 4; 
+	dump_part(aa, bb, 3 * thr);
+	dump_part(aa, bb, 2 * thr);
+	dump_part(aa, bb, thr);
+	ft_putendl("after 3 dumps");
+	print_stk(aa);
+	print_stk(bb);
+	sip_approach(aa, bb);
+	rsip_approach(bb, aa);
+}
+
+void	find_solution5(t_stackf *aa, t_stackf *bb)
+{
+	int	i;
+	int	j;
+	int	num;
+
+	dump_second_half(aa, bb);
+	ft_putstr("start score: ");
+	ft_putnbr(dirpoint_rank(aa, bb));
+	ft_putendl("");
+	if (aa->stk->size > bb->stk->size) 
+		num = aa->stk->size - 1;
+	else
+		num = bb->stk->size - 1;
+	j = 0;
+	while (j < num / 2 && dirpoint_rank(aa, bb) != 0)
+	{
+		i = num - j;
+		while (i > 0)
+		{
+			rot2(aa, bb);
+			if ((peek(aa) > peek2(aa)) & (peek(bb) < peek2(bb)))
+				swap2(aa, bb);
+			else if (peek(aa) > peek2(aa))
+				swap(aa);
+			else if (peek(bb) < peek2(bb))
+				swap(bb);
+			i--;
+			ft_putendl("after a round");
+			print_stk(aa);
+			print_stk(bb);
+		}
+		ft_putendl("--change");
+		while (i < num - j)
+		{
+			rrot2(aa, bb);
+			if ((peek(aa) > peek2(aa)) & (peek(bb) < peek2(bb)))
+				swap2(aa, bb);
+			else if (peek(aa) > peek2(aa))
+				swap(aa);
+			else if (peek(bb) < peek2(bb))
+				swap(bb);
+			i++;
+			ft_putendl("after a round");
+			print_stk(aa);
+			print_stk(bb);
+		}
+		j++;
+		ft_putstr("intermediate score: ");
+		ft_putnbr(dirpoint_rank(aa, bb));
+		ft_putendl("");
+	}
+	ft_putstr("finish score: ");
+	ft_putnbr(dirpoint_rank(aa, bb));
+	ft_putendl("");
+}
 
 int	input_vals(char **argv, t_stack *s)
 //stub
@@ -183,7 +251,7 @@ int	main(int argc, char **argv)
 	print_stk(&bb);
 //	find_solution(&a, &b);
 //	find_solution2(&aa, &bb);
-	find_solution3(&aa, &bb);
+	find_solution5(&aa, &bb);
 /*    mkidx(&aa);
 	print_stk(&aa);
 	print_stk(&bb);

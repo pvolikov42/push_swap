@@ -88,6 +88,17 @@ int	peek_stack(t_stack *s)
 	return (s->val[s->size - 1]);
 }
 
+int	peek2_stack(t_stack *s)
+{
+	if (s->size < 2)
+	{
+		err("Stack underflow\n");
+		return (0);
+	}
+	return (s->val[s->size - 2]);
+}
+
+
 int	swap_stack(t_stack *s)
 {
 	int	tmp;
