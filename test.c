@@ -65,6 +65,42 @@ void	test_nondescention()
 	ft_putendl("");
 }
 
+void	test_dist_to_brk()
+{
+	t_stackf	s;
+	t_stack		stk;
+	t_stack		idx;
+
+	init(&s, &stk, &idx);
+	ft_putendl("Testing dist_to_brk()...");
+	ft_putstr("1:");
+	ft_test(dist_to_brk(&s) == 0);
+	ft_putstr(" 2:");
+	push(&s, 10);
+	ft_test(dist_to_brk(&s) == 0);
+	ft_putstr(" 3:");
+	push(&s, 10);
+	ft_test(dist_to_brk(&s) == 3);
+	ft_putstr(" 4:");
+	push(&s, 4);
+	ft_test(dist_to_brk(&s) == 0);
+	ft_putstr(" 5:");
+	push(&s, 4);
+	ft_test(dist_to_brk(&s) == 0);
+	ft_putstr(" 6:");
+	push(&s, 1);
+	push(&s, 13);
+	push(&s, 12);
+	ft_putnbr(dist_to_brk(&s));
+	ft_test(dist_to_brk(&s) == 2);
+	ft_putstr(" 7:");
+	rot(&s);
+	rot(&s);
+	rot(&s);
+	ft_test(dist_to_brk(&s) == -1);
+	ft_putendl("");	
+}
+
 int	main()
 {
 	int	a0[]={0, 1, 4, 5, 8};
@@ -106,4 +142,8 @@ int	main()
 	ft_putendl("");
 	
 	test_nondescention();
+	ft_putendl("");
+	
+	test_dist_to_brk();
+	ft_putendl("");
 }

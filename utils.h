@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   push_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/08 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Created: 2025/09/06 20:17:33 by pvolikov          #+#    #+#             */
+/*   Updated: 2025/09/06 20:19:29 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "libft/libft.h"
+#ifndef UTILS_H
+# define UTILS_H
 
 
-void	debug(char *s)
-{
-	printf("DEBUG: %s", s);
-	//ft_putstr_fd(s, 2);
-}
+void	debug(char *s);
+void	err(char *s);
+int		abs(int val);
 
-void	err(char *s)
-{
-	ft_putstr_fd(s, 2);
-}
-
-int	abs(int value)
-{
-	if (value < 0) 
-		return (-value);
-	return (value);
-}
+#endif

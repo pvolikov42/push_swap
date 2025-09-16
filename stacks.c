@@ -10,8 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "utils.h"
 #include "libft/libft.h"
 #include "push_swap.h"
+
 
 void	init_stack(t_stack *s)
 {
@@ -34,6 +36,17 @@ void	print_stack(const t_stack *s)
 		i++;
 	}
 	ft_putstr(">\n");
+}
+
+int	size_stack(const t_stack *s)
+{
+	return(s->size);
+};
+
+int push_stack(t_stack *dst, int value)
+{
+	dst->val[dst->size++] = value;
+	return (1);
 }
 
 int	copy_stack(t_stack *dst, const t_stack *src)
@@ -72,7 +85,7 @@ int	pop_stack(t_stack *s)
 {
 	if (s->size < 1)
 	{
-		err("Stack underflow\n");
+		err("pop_stack: Stack underflow\n");
 		return (0);
 	}
 	return (s->val[--(s->size)]);
@@ -82,17 +95,19 @@ int	peek_stack(t_stack *s)
 {
 	if (s->size < 1)
 	{
-		err("Stack underflow\n");
+		err("peek_stack: Stack underflow\n");
 		return (0);
 	}
 	return (s->val[s->size - 1]);
 }
 
 int	peek2_stack(t_stack *s)
+// peek the value just under the top one
+// equiv to elem=pop(s) ; res=peek(s) ; push(elem, s); return(res)
 {
 	if (s->size < 2)
 	{
-		err("Stack underflow\n");
+		err("peek2_stack: Stack underflow\n");
 		return (0);
 	}
 	return (s->val[s->size - 2]);
