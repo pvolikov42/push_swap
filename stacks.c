@@ -14,7 +14,6 @@
 #include "libft/libft.h"
 #include "push_swap.h"
 
-
 void	init_stack(t_stack *s)
 {
 	s->size = 0;
@@ -180,4 +179,14 @@ int	count_monotonic_sequences(const t_stack *s)
 		i++;
 	}
 	return (count);
+}
+
+int	zero_stack(t_stack *s)
+{
+	int	i;
+
+	i = 0;
+	while (i < s->size)
+		s->val[i++] = 0;
+	return (i);
 }

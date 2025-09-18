@@ -13,9 +13,17 @@
 #ifndef UTILS_H
 # define UTILS_H
 
+# ifndef DEBUG
+//#  define DEBUG 0
+#  define DEBUG 1
+# endif
 
 void	debug(char *s);
+void	ft_d(char *s);
+void	ft_d2(char *s, int num);
+void	ft_d3(char *s1, int num, char *s3);
 void	err(char *s);
 int		abs(int val);
+int		sign(int value);
 
 #endif

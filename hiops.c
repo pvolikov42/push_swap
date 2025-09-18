@@ -12,6 +12,7 @@
 
 #include "utils.h"
 #include "push_swap.h"
+#include "libft/libft.h"
 
 int	dump_second_half(t_stackf *src, t_stackf *dst)
 {
@@ -73,6 +74,7 @@ int	ndump_higher(t_stackf *src, t_stackf *dst, int threshold, int n)
 	}
 	return (cnt);
 }
+
 int	dump_lower(t_stackf *src, t_stackf *dst, int threshold)
 {
 	int	i;
@@ -153,23 +155,51 @@ int	dist_to_brk(const t_stackf *s)
 	return (sz + 1);
 }
 
-int	dist_to_next(const t_stackf *s)
+int	dist_to_elem(const t_stackf *s, int i)
 // positive number -- use rot
 // negative number -- use rrot
+// probably should go into stack domain
 {
-	int	i;
 	int sz;
 	int	d1;
 	int	d2;
 
-	sz = s->idx->size;
+	sz = size_stk(s);
+	if (sz < 1)
+	{ 
+		err("dist_to_elem: stack is empty");
+		return (ERR_STACKF);
+	}
+	d1 = find_value(i, s->idx->val, sz);
+	d2 = rfind_value(i, s->idx->val, sz);
+	if (d1 == -1 || d2 == -1) 
+		return (ERR_STACKF);
+	if (d1 + 1 > sz - 1 - d2)
+		return (sz - 1 - d2);
+	else 
+		return (-1 * (d1 + 1));
+}
+
+int	dist_to_next(const t_stackf *s, int i, int max)
+// positive number -- use rot
+// negative number -- use rrot
+{
+	int sz;
+	int	d1;
+	int	d2;
+
+	sz = size_stk(s);
 	if (sz < 1)
 	{ 
 		err("dist_to_next: stack is empty");
 		return (ERR_STACKF);
 	}
-	i = min_el(s->idx->val, sz);
 	d1 = find_value(i, s->idx->val, sz);
+	while (i <= max && d1 == -1)
+	{
+		i++;
+		d1 = find_value(i, s->idx->val, sz);
+	}
 	d2 = rfind_value(i, s->idx->val, sz);
 	if (d1 == -1 || d2 == -1) 
 		return (ERR_STACKF);
@@ -179,24 +209,48 @@ int	dist_to_next(const t_stackf *s)
 		return(min(d1 + 1, sz - 1 - d2));
 }
 
-/*
-int	dist_to_2ndnext(const t_stackf *s)
+int	goto_el(t_stackf *s, int idx)
+// rotates or revrotates stack to get idx element on top
+// should return the number of moves done
 {
-	t_stackf	tmp;
-	int	i;
-	int sz;
-	int	d1;
-	int	d2;
+	int	dist;
 
-	sz = s->idx->size;
-	if (sz < 2) 
+//	ft_putendl("_gotoel");
+	dist = dist_to_elem(s, idx);
+	return(adjust_stk(s, dist));
+}
+
+int	adjust_stk(t_stackf *s, int dist)
+// should return the number of moves done
+{
+	if (dist == ERR_STACKF) 
+		return(ERR_STACKF);
+	if (dist > 0)
+		return(mrot(s, dist));
+	if (dist < 0)
+		return(mrrot(s, -dist));
+	return (0);
+}
+
+int	dist_2ndstep(const t_stackf *s, int i, int delta)
+// distance from i-th element to (i + delta)-th element
+{
+	t_stackf	*s_cpy;
+	int	d;
+
+	if (size_stk(s) < 2) 
 	{
-		err("dist_to_2ndnext: size is too small");
+		err("dist_2ndstep: size is too small");
 		return (ERR_STACKF);
 	}
-	i = dist_to_next(s);
-	remove_stk
-}*/
+	s_cpy = dup_stk(s);
+	s_cpy->id = 't';  //  i.e temporary
+	goto_el(s_cpy, i);
+	pop(s_cpy);
+	d = dist_to_elem(s_cpy, i + delta);
+	release_stk(s_cpy);
+	return (d);
+}
 
 int	sortedness_score_for_a(const t_stackf *s)
 {
@@ -252,3 +306,31 @@ int	dist_to_next(t_stackf *s, int cur)
 
 	find_value
 }*/
+
+int	is_sip_2step_optimizable(t_stackf *s, int idx)
+{
+	int dist1;
+	int dist2;
+	
+	dist1 = dist_to_elem(s, idx);
+//	if (dist1 == ERR_STACKF) 
+//		return (0);
+	dist2 = dist_2ndstep(s, idx, -1);
+	ft_d3("_dist1=", dist1, " ");
+	ft_d3(" dist2=", dist2, "\n");
+	return (abs(dist1 + dist2) + 1 + sign(dist2) < abs(dist1)); 
+}
+
+int	is_rsip_2step_optimizable(t_stackf *s, int idx)
+{
+	int dist1;
+	int dist2;
+	
+	dist1 = dist_to_elem(s, idx);
+//	if (dist1 == ERR_STACKF) 
+//		return (0);
+	dist2 = dist_2ndstep(s, idx, +1);
+	ft_d3("_dist1=", dist1, " ");
+	ft_d3(" dist2=", dist2, "\n");
+	return (abs(dist1 + dist2) + 1 + sign(dist2) < abs(dist1));
+}

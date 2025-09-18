@@ -13,14 +13,18 @@
 #include <stdlib.h>
 #include "libft/libft.h"
 #include "push_swap.h"
+#include "utils.h"
 
-int	create_stk(t_stackf *s)
+t_stackf	*create_stk(void)
 {
+	t_stackf	*s;
+	
+	s = (t_stackf *)malloc(sizeof(t_stackf));
 	s->stk = (t_stack *)malloc(sizeof(t_stack));
 	s->idx = (t_stack *)malloc(sizeof(t_stack));
 	if (s->stk == NULL || s->idx == NULL)
-		return (0);
-	return (1);
+		return ((t_stackf *)NULL);
+	return (s);
 }
 
 void	init_stk(t_stackf *s, t_stack *stk, t_stack *idx, char id)
@@ -36,6 +40,7 @@ void	release_stk(t_stackf *s)
 {
 	free((void *)s->stk);
 	free((void *)s->idx);
+	free((void *)s);
 }
 
 void	print_stk(const t_stackf *s)
@@ -48,17 +53,40 @@ void	print_stk(const t_stackf *s)
 	print_stack(s->idx);
 }
 
+t_stackf	*dup_stk(const t_stackf *src)
+{
+	t_stackf	*new;
+
+	new = create_stk();
+	copy_stack(new->stk, src->stk);
+	copy_stack(new->idx, src->idx);
+	new->id = src->id;
+	return (new);
+}
+
 void	mkidx(t_stackf *s)
+// creates an index for each value (descending)
+// if strictness == 0 then indexes for equal values are equal
+// if strictness != 0 then indexes will be unique
 {
 	int		i;
+	int		pos;
 	t_stack	tmp;
+	t_stack	used;
+	int		strictness;
 	
 	copy_stack(&tmp, s->stk);
 	bubble_rsort(tmp.val, tmp.size);
+	strictness = 1;
+	used.size = size_stk(s);
+	zero_stack(&used);
 	i = 0;
-	while (i < s->stk->size)
+	while (i < size_stk(s))
 	{
-		s->idx->val[i] = find_value(s->stk->val[i], tmp.val, s->stk->size);
+		pos = find_value(s->stk->val[i], tmp.val, s->stk->size);
+		s->idx->val[i] = pos + used.val[pos];
+		if (strictness)
+			used.val[pos]++;
 		i++;
 	}
 	s->idx->size = i;
@@ -75,9 +103,10 @@ int	push(t_stackf *dst, int val)
 
 int	xpush(t_stackf *dst, t_stackf *src)
 {
-	ft_putstr("+p");
+	ft_d("+");
+	ft_putstr("p");
 	ft_putchar(dst->id);
-	ft_putnbr(peekidx(src));
+	ft_d2(" ", peekidx(src)); 
 	ft_putendl("");
 	xpush_stack(dst->stk, src->stk);
 	xpush_stack(dst->idx, src->idx);

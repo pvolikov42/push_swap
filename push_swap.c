@@ -91,6 +91,48 @@ int	sip_range(t_stackf *aa, t_stackf *bb, int min, int max)
 	return (counter);
 }
 
+int	sip_range_optm(t_stackf *aa, t_stackf *bb, int min, int max)
+// as sip_range but optimized to look one step ahead
+// returns the number of sipped (xpushed) elements
+{
+	int	i;
+	int counter;
+
+	counter = 0;
+	i = max;
+	while (i >= min)
+	{
+		if (find_value(i, aa->idx->val, aa->idx->size) == -1)
+		{
+			i--;  // only decrease after all equal entries are moved
+			continue ;
+		}
+		ft_d3("_sip_opt_round. index=", i,"\n");
+		if (i - min > 1 && is_sip_2step_optimizable(aa, i))
+		{
+			ft_d("_optimizing..\n");
+			goto_el(aa, i - 1); // take 2nd before 1st 
+			xpush(bb, aa);
+			goto_el(aa, i);
+			xpush(bb, aa);
+			swap(bb);
+			counter +=2;
+		}
+		else
+		{
+			ft_d("_default action\n");
+			goto_el(aa, i);
+			xpush(bb, aa);
+			counter++;
+		}
+		
+	}
+	//ft_putstr("Number of sipped elements: ");
+	//ft_putnbr(counter);
+	//ft_putchar('\n');
+	return (counter);
+}
+
 void	rsip_approach(t_stackf *aa, t_stackf *bb)
 // sips all elements in first-to-last order
 {
@@ -176,7 +218,49 @@ int	rsip_range(t_stackf *aa, t_stackf *bb, int min, int max)
 	return (counter);
 }
 
-int	divide_n_sip(t_stackf *aa, t_stackf *bb, int min, int max)
+int	rsip_range_optm(t_stackf *aa, t_stackf *bb, int min, int max)
+// same as rsip_range but optimized to look one step ahead
+// returns the number of sipped (xpushed) elements
+{
+	int	i;
+	int counter;
+
+	counter = 0;
+	i = min;
+	while (i <= max)
+	{
+		if (find_value(i, aa->idx->val, aa->idx->size) == -1)
+		{
+			i++;  // only change after all equal entries are moved
+			continue ;
+		}
+		ft_d3("_rsip_opt_round. index=", i,"\n");
+		if (max - i > 1 && is_rsip_2step_optimizable(aa, i))
+		{
+			ft_d("_optimizing..\n");
+			goto_el(aa, i + 1); // take 2nd before 1st 
+			xpush(bb, aa);
+			goto_el(aa, i);
+			xpush(bb, aa);
+			swap(bb);
+			counter +=2;
+		}
+		else
+		{
+			ft_d("_default action\n");
+			goto_el(aa, i);
+			xpush(bb, aa);
+			counter++;
+		}
+	}
+	//ft_putstr("Number of sipped elements: ");
+	//ft_putnbr(counter);
+	//ft_putchar('\n');
+	return (counter);
+}
+
+
+int	divide_n_sip_cr(t_stackf *aa, t_stackf *bb, int min, int max)
 // aa is sorted
 // bb is unsorted but the upper chunk contains all values 
 // above min and below max
@@ -186,38 +270,38 @@ int	divide_n_sip(t_stackf *aa, t_stackf *bb, int min, int max)
 	int			num;
 	int			workleft;
 
-	ft_putstr("_sip_nn: min="); ft_putnbr(min);
-	ft_putstr(" max="); ft_putnbr(max); ft_putstr("\n");
+	ft_d3("_sip_cr: min=", min, " ");
+	ft_d3(" max=", max, "\n");
 	print_stk(aa);
 	print_stk(bb);
 	chunk = max - min + 1;
 	if (chunk <= OPTIMUM)
 	{
-		ft_putendl("_nn: OPTIMUM branch");
-		rsip_range(bb, aa, min, max);
+		ft_d("_cr: OPTIMUM branch\n");
+//		rsip_range(bb, aa, min, max);
+		rsip_range_optm(bb, aa, min, max);
 	}
 	if (chunk > OPTIMUM) 
 	{
-		ft_putendl("_nn: non-OPTIMUM branch");
+		ft_d("_cr: non-OPTIMUM branch\n");
 		thr = min + chunk / 2;
 		num = range_len(bb, min, max); //chunk volume
 		workleft = size_stk(bb) - num; //unsorted volume
-		ft_putstr("_params: num="); ft_putnbr(num);
-		ft_putstr(" workleft="); ft_putnbr(workleft); 
-		ft_putstr(" thr="); ft_putnbr(thr); 
-		ft_putstr("\n");
+		ft_d2("_params: num=", num);
+		ft_d2(" workleft=", workleft); 
+		ft_d3(" thr=", thr, "\n");
 		num = num - ndump_lower(bb, aa, thr + 1, num); //remaining volume
-		divide_n_sip_lr(aa, bb, min, thr);
+		divide_n_sip_cl(aa, bb, min, thr);
 		if (num < workleft) 
 			mrrot(bb, num);
 		else
 			mrot(bb, workleft);
-		divide_n_sip(aa, bb, thr + 1, max);
+		divide_n_sip_cr(aa, bb, thr + 1, max);
 	}	
 	return (1);
 }
 
-int	divide_n_sip_lr(t_stackf *aa, t_stackf *bb, int min, int max)
+int	divide_n_sip_cl(t_stackf *aa, t_stackf *bb, int min, int max)
 // aa is sorted until min and has a chunk of unsorted 
 // from min to max
 // bb is unsorted but all above max
@@ -227,34 +311,34 @@ int	divide_n_sip_lr(t_stackf *aa, t_stackf *bb, int min, int max)
 	int			num;
 	int			workdone;
 
-	ft_putstr("_sip_lr: min="); ft_putnbr(min);
-	ft_putstr(" max="); ft_putnbr(max); ft_putstr("\n");
+	ft_d2("_sip_cl: min=", min);
+	ft_d3(" max=", max, "\n");
 	print_stk(aa);
 	print_stk(bb);
 	chunk = max - min + 1;
 	if (chunk <= OPTIMUM)
 	{
-		ft_putendl("_lr: OPTIMUM branch");
-		num = sip_range(aa, bb, min, max);
+		ft_d("_cl: OPTIMUM branch\n");
+//		num = sip_range(aa, bb, min, max);
+		num = sip_range_optm(aa, bb, min, max);
 		ndump(bb, aa, num);
 	}
 	if (chunk > OPTIMUM) 
 	{
-		ft_putendl("_lr: non-OPTIMUM branch");
+		ft_d("_cl: non-OPTIMUM branch\n");
 		thr = min + chunk / 2;
 		num = range_len(aa, min, max); //chunk volume
 		workdone = size_stk(aa) - num; //sorted volume
-		ft_putstr("_params: num="); ft_putnbr(num);
-		ft_putstr(" workdone="); ft_putnbr(workdone); 
-		ft_putstr(" thr="); ft_putnbr(thr); 
-		ft_putstr("\n");
+		ft_d2("_params: num=", num);
+		ft_d2(" workdone=", workdone); 
+		ft_d3(" thr=", thr, "\n");
 		num = num - ndump_higher(aa, bb, thr, num); //remaining volume
 		if (num < workdone) 
 			mrrot(aa, num);
 		else
 			mrot(aa, workdone);
-		divide_n_sip_lr(aa, bb, min, thr);
-		divide_n_sip(aa, bb, thr + 1, max);
+		divide_n_sip_cl(aa, bb, min, thr);
+		divide_n_sip_cr(aa, bb, thr + 1, max);
 	}	
 	return (1);
 }
@@ -276,7 +360,7 @@ void	find_solution(t_stack *a, t_stack *b)
 		i++;
 	}
 	ai.size = i;
-	ft_putstr("a indexed: ");
+	ft_d("a indexed: ");
 	print_stack(&ai);
 	init_stack(b);
 	xpush_stack(b, a);
@@ -284,7 +368,7 @@ void	find_solution(t_stack *a, t_stack *b)
 	rot_stack(a);
 //	xpush_stack(b, a);
 //	sip_approach(a, b, &ai);
-	ft_putendl("\nrr\nrrr");
+	ft_d("\nrr\nrrr");
 }
 
 void	find_solution2(t_stackf *aa, t_stackf *bb)
@@ -297,15 +381,15 @@ void	find_solution2(t_stackf *aa, t_stackf *bb)
 void	find_solution3(t_stackf *aa, t_stackf *bb)
 {
 	dump_second_half(aa, bb);
-	ft_putendl("after dump_second_half");
+	ft_d("after dump_second_half\n");
 	print_stk(aa);
 	print_stk(bb);
 	sip_approach(aa, bb);
-	ft_putendl("after sip_approach(aa, bb)");
+	ft_d("after sip_approach(aa, bb)\n");
 	print_stk(aa);
 	print_stk(bb);
 	rsip_approach(bb, aa);
-	ft_putendl("after rsip_approach(bb, aa)");
+	ft_d("after rsip_approach(bb, aa)\n");
 	print_stk(aa);
 	print_stk(bb);
 	//dump(bb, aa);
@@ -375,7 +459,7 @@ void	find_solution9(t_stackf *aa, t_stackf *bb)
 	int thr;
 
 	thr = size_stk(aa) + size_stk(bb);
-	divide_n_sip_lr(aa, bb, 0, thr);
+	divide_n_sip_cl(aa, bb, 0, thr);
 }
 
 void	find_solution5(t_stackf *aa, t_stackf *bb)
@@ -386,9 +470,7 @@ void	find_solution5(t_stackf *aa, t_stackf *bb)
 	int	num;
 
 	dump_second_half(aa, bb);
-	ft_putstr("start score: ");
-	ft_putnbr(wrongdir_rank(aa, bb));
-	ft_putendl("");
+	ft_d3("start score: ", wrongdir_rank(aa, bb), "\n");
 	if (aa->stk->size > bb->stk->size) 
 		num = aa->stk->size - 1;
 	else
@@ -410,18 +492,16 @@ void	find_solution5(t_stackf *aa, t_stackf *bb)
 			else if (peek(bb) < peek2(bb))
 				swap(bb);
 			i--;
-			ft_putendl("after a round");
+			ft_d("after a round\n");
 			print_stk(aa);
 			print_stk(bb);
 		}
 		j += 2;
-		ft_putstr("intermediate score: ");
-		ft_putnbr(wrongdir_rank(aa, bb));
-		ft_putendl("");
+		ft_d3("intermediate score: ", wrongdir_rank(aa, bb), "\n");
 	}
-	ft_putstr("testing goto_neareast ");
+	ft_d("testing goto_neareast \n");
 	print_stk(aa);
-	ft_putnbr(dist_to_brk(aa));
+	ft_d2("", dist_to_brk(aa));
 	goto_nearest_brk(aa);
 	print_stk(aa);
 	goto_nearest_brk(bb);
@@ -487,12 +567,10 @@ int	main(int argc, char **argv)
 	rot(&aa);
 	print_stk(&aa);
 	rot(&aa); */
-	ft_putendl("Finish a:");
+	ft_d("Finish \n");
 	print_stk(&aa);
-	ft_putendl("Finish b: ");
+	//ft_putendl("Finish b: ");
 	print_stk(&bb);
-	ft_putstr("finish score: ");
-	ft_putnbr(wrongdir_rank(&aa, &bb));
-	ft_putendl("");
+	ft_d3("finish score: ", wrongdir_rank(&aa, &bb), "\n");
 	return (0);
 }
