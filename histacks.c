@@ -45,6 +45,8 @@ void	release_stk(t_stackf *s)
 
 void	print_stk(const t_stackf *s)
 {
+	if ( DEBUG == 0 )
+		return ;
 	ft_putchar(s->id);
 	ft_putstr(":stk:");
 	print_stack(s->stk);
@@ -100,7 +102,6 @@ int	push(t_stackf *dst, int val)
 	return (1);
 }
 
-
 int	xpush(t_stackf *dst, t_stackf *src)
 {
 	ft_d("+");
@@ -145,7 +146,8 @@ int	peek2(const t_stackf *s)
 
 int swap(t_stackf *s)
 {
-	ft_putstr("+s");
+	ft_d("+");
+	ft_putstr("s");
 	ft_putchar(s->id);
 	ft_putendl("");
 	return (swap_stack(s->stk) && swap_stack(s->idx));
@@ -153,14 +155,16 @@ int swap(t_stackf *s)
 
 int	swap2(t_stackf *s1, t_stackf *s2)
 {
-	ft_putendl("+ss");
+	ft_d("+");
+	ft_putendl("ss");
 	return (swap_stack(s1->stk) && swap_stack(s1->idx) \
 		&& swap_stack(s2->stk) && swap_stack(s2->idx));
 }
 
 int	rot(t_stackf *s)
 {
-	ft_putstr("+r");
+	ft_d("+");
+	ft_putstr("r");
 	ft_putchar(s->id);
 	ft_putendl("");
 	return (rot_stack(s->stk) && rot_stack(s->idx));
@@ -168,7 +172,7 @@ int	rot(t_stackf *s)
 
 int	mrot(t_stackf *s, int ops)
 {
-	ft_putendl("_mrot started");
+	ft_d("_mrot started\n");
 	while (ops-- > 0) 
 		rot(s);
 	return (1);
@@ -176,7 +180,8 @@ int	mrot(t_stackf *s, int ops)
 
 int	rrot(t_stackf *s)
 {
-	ft_putstr("+rr");
+	ft_d("+");
+	ft_putstr("rr");
 	ft_putchar(s->id);
 	ft_putendl("");
 	return (rrot_stack(s->stk) && rrot_stack(s->idx));
@@ -184,7 +189,7 @@ int	rrot(t_stackf *s)
 
 int	mrrot(t_stackf *s, int ops)
 {
-	ft_putendl("_mrrot started");
+	ft_d("_mrrot started\n");
 	while (ops-- > 0) 
 		rrot(s);
 	return (1);

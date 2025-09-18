@@ -551,9 +551,9 @@ int	main(int argc, char **argv)
 	if (! input_vals(++argv, &a))
 		return (ft_putstr("Error\n"), 2);
 	mkidx(&aa);
-	ft_putendl("Start a:");
+	ft_d("Start a:\n");
 	print_stk(&aa);
-	ft_putendl("Start b:");
+	ft_d("Start b:\n");
 	print_stk(&bb);
 //	find_solution(&a, &b);
 //	find_solution2(&aa, &bb);

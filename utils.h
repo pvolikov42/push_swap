@@ -14,8 +14,8 @@
 # define UTILS_H
 
 # ifndef DEBUG
-//#  define DEBUG 0
-#  define DEBUG 1
+#  define DEBUG 0
+//#  define DEBUG 1
 # endif
 
 void	debug(char *s);
