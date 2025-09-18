@@ -1,50 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   histacks2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/08 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:19:29 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "utils.h"
 #include "libft/libft.h"
+#include "push_swap.h"
+#include "utils.h"
 
-void	debug(char *s)
+int	peekidx(const t_stackf *s)
 {
-	printf("DEBUG: %s", s);
+	return (peek_stack(s->idx));
 }
 
-void	err(char *s)
+int	peek2(const t_stackf *s)
 {
-	ft_putstr_fd("ERR: ", 2);
-	ft_putstr_fd(s, 2);
+	return (peek2_stack(s->stk));
 }
 
-void	ft_d(char *s)
+int	swap(t_stackf *s)
 {
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s);
+	ft_d("+");
+	ft_putstr("s");
+	ft_putchar(s->id);
+	ft_putendl("");
+	return (swap_stack(s->stk) && swap_stack(s->idx));
 }
 
-void	ft_d2(char *s, int num)
+int	swap2(t_stackf *s1, t_stackf *s2)
 {
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s);
-	ft_putnbr(num);
-}
+	int	res;
 
-void	ft_d3(char *s1, int num, char *s3)
-{
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s1);
-	ft_putnbr(num);
-	ft_putstr(s3);
+	ft_d("+");
+	ft_putendl("ss");
+	res = swap_stack(s1->stk) && swap_stack(s1->idx);
+	return (res && swap_stack(s2->stk) && swap_stack(s2->idx));
 }

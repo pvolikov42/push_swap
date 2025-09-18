@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,41 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "utils.h"
-#include "libft/libft.h"
 
-void	debug(char *s)
+int	abs(int value)
 {
-	printf("DEBUG: %s", s);
+	if (value < 0)
+		return (-value);
+	else
+		return (value);
 }
 
-void	err(char *s)
+int	sign(int value)
 {
-	ft_putstr_fd("ERR: ", 2);
-	ft_putstr_fd(s, 2);
+	if (value < 0)
+		return (-1);
+	else
+		return (1);
 }
 
-void	ft_d(char *s)
+int	min(int a, int b)
 {
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s);
+	if (a <= b)
+		return (a);
+	else
+		return (b);
 }
 
-void	ft_d2(char *s, int num)
+int	max(int a, int b)
 {
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s);
-	ft_putnbr(num);
-}
-
-void	ft_d3(char *s1, int num, char *s3)
-{
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s1);
-	ft_putnbr(num);
-	ft_putstr(s3);
+	if (a >= b)
+		return (a);
+	else
+		return (b);
 }

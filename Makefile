@@ -5,11 +5,12 @@ CC = cc
 # CFLAGS = -Wall -Wextra -Werror -I $(INCL)
 CFLAGS = -Wall -Wextra -Werror
 # MODS = push_swap 
-MODS = stacks	\
-		histacks	\
-		hiops	\
-		sort \
-		utils
+MODS = logic1 logic2 logic3 logic4 logic5 logic6 \
+		stacks stacks1 stacks2 \
+		histacks histacks1 histacks2 histacks3 histacks4 \
+		hiops hiops1 hiops2 hiops3\
+		sort sort1 sort2 \
+		utils utils1
 # VPATH = srcs
 # NAMEOBJS = ft_putchar.o ft_swap.o ft_putstr.o ft_strlen.o ft_strcmp.o
 # NAMEOBJS = $(addprefix ft_,$(FUNCS))

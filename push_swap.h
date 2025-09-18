@@ -110,8 +110,15 @@ int		max_el(const int *arr, int size);
 int		min(int a, int b);
 int		max(int a, int b);
 
+void	sip_approach(t_stackf *aa, t_stackf *bb);
+void	rsip_approach(t_stackf *aa, t_stackf *bb);
 int		divide_n_sip_cl(t_stackf *aa, t_stackf *bb, int min, int max);
 int		divide_n_sip_cr(t_stackf *aa, t_stackf *bb, int min, int max);
+int		sip_range(t_stackf *aa, t_stackf *bb, int min, int max);
+int		rsip_range(t_stackf *aa, t_stackf *bb, int min, int max);
+int		sip_range_optm(t_stackf *aa, t_stackf *bb, int min, int max);
+int		rsip_range_optm(t_stackf *aa, t_stackf *bb, int min, int max);
 //void	sip_approach(t_stack *a, t_stack *b, t_stack *ai);
+void	find_solution9(t_stackf *aa, t_stackf *bb);
 
 #endif

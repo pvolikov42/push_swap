@@ -1,50 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   histacks4.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/08 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:19:29 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "utils.h"
 #include "libft/libft.h"
+#include "push_swap.h"
+#include "utils.h"
 
-void	debug(char *s)
+int	mrot(t_stackf *s, int ops)
 {
-	printf("DEBUG: %s", s);
+	ft_d("_mrot started\n");
+	while (ops-- > 0)
+		rot(s);
+	return (1);
 }
 
-void	err(char *s)
+int	mrrot(t_stackf *s, int ops)
 {
-	ft_putstr_fd("ERR: ", 2);
-	ft_putstr_fd(s, 2);
+	ft_d("_mrrot started\n");
+	while (ops-- > 0)
+		rrot(s);
+	return (1);
 }
 
-void	ft_d(char *s)
+int	dump(t_stackf *src, t_stackf *dst)
 {
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s);
+	int	cnt;
+
+	cnt = 0;
+	while (src->stk->size)
+	{
+		xpush(dst, src);
+		cnt++;
+	}
+	return (cnt);
 }
 
-void	ft_d2(char *s, int num)
+int	ndump(t_stackf *src, t_stackf *dst, int num)
 {
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s);
-	ft_putnbr(num);
-}
+	int	i;
 
-void	ft_d3(char *s1, int num, char *s3)
-{
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s1);
-	ft_putnbr(num);
-	ft_putstr(s3);
+	i = 0;
+	while (i < num && src->stk->size)
+	{
+		xpush(dst, src);
+		i++;
+	}
+	return (i);
 }

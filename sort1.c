@@ -1,67 +1,71 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stacks.c                                           :+:      :+:    :+:   */
+/*   sort1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/07 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:19:29 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
-#include "libft/libft.h"
-#include "push_swap.h"
-
-void	init_stack(t_stack *s)
-{
-	s->size = 0;
-}
-
-void	print_stack(const t_stack *s)
+int	nonascention(const int *arr, int size)
 {
 	int	i;
+	int	count;
 
-	ft_putstr("Len=");
-	ft_putnbr(s->size);
-	ft_putchar(':');
+	count = 0;
 	i = 0;
-	while (i < s->size)
+	while (i < size - 1)
 	{
-		ft_putnbr(s->val[i]);
-		if (i != s->size)
-			ft_putchar(' ');
+		if (arr[i] > arr[i + 1])
+			count++;
 		i++;
 	}
-	ft_putstr(">\n");
+	return (count);
 }
 
-int	size_stack(const t_stack *s)
-{
-	return (s->size);
-}
-
-int	copy_stack(t_stack *dst, const t_stack *src)
+int	nondescention(const int *arr, int size)
 {
 	int	i;
+	int	count;
 
+	count = 0;
 	i = 0;
-	while (i < src->size)
+	while (i < size - 1)
 	{
-		dst->val[i] = src->val[i];
+		if (arr[i] < arr[i + 1])
+			count++;
 		i++;
 	}
-	dst->size = src->size;
-	return (i);
+	return (count);
 }
 
-int	zero_stack(t_stack *s)
+int	find_value(int value, const int *arr, int size)
 {
 	int	i;
 
 	i = 0;
-	while (i < s->size)
-		s->val[i++] = 0;
-	return (i);
+	while (i < size)
+	{
+		if (arr[i] == value)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int	rfind_value(int value, const int *arr, int size)
+{
+	int	i;
+
+	i = size - 1;
+	while (i >= 0)
+	{
+		if (arr[i] == value)
+			return (i);
+		i--;
+	}
+	return (-1);
 }

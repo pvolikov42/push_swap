@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stacks.c                                           :+:      :+:    :+:   */
+/*   stacks1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/07 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:19:29 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,40 @@
 #include "libft/libft.h"
 #include "push_swap.h"
 
-void	init_stack(t_stack *s)
+int	push_stack(t_stack *dst, int value)
 {
-	s->size = 0;
+	dst->val[dst->size++] = value;
+	return (1);
 }
 
-void	print_stack(const t_stack *s)
+int	pop_stack(t_stack *s)
 {
-	int	i;
-
-	ft_putstr("Len=");
-	ft_putnbr(s->size);
-	ft_putchar(':');
-	i = 0;
-	while (i < s->size)
+	if (s->size < 1)
 	{
-		ft_putnbr(s->val[i]);
-		if (i != s->size)
-			ft_putchar(' ');
-		i++;
+		err("pop_stack: Stack underflow\n");
+		return (0);
 	}
-	ft_putstr(">\n");
+	return (s->val[--(s->size)]);
 }
 
-int	size_stack(const t_stack *s)
+int	peek_stack(t_stack *s)
 {
-	return (s->size);
-}
-
-int	copy_stack(t_stack *dst, const t_stack *src)
-{
-	int	i;
-
-	i = 0;
-	while (i < src->size)
+	if (s->size < 1)
 	{
-		dst->val[i] = src->val[i];
-		i++;
+		err("peek_stack: Stack underflow\n");
+		return (0);
 	}
-	dst->size = src->size;
-	return (i);
+	return (s->val[s->size - 1]);
 }
 
-int	zero_stack(t_stack *s)
+int	peek2_stack(t_stack *s)
+// peek the value just under the top one
+// equiv to elem=pop(s) ; res=peek(s) ; push(elem, s); return(res)
 {
-	int	i;
-
-	i = 0;
-	while (i < s->size)
-		s->val[i++] = 0;
-	return (i);
+	if (s->size < 2)
+	{
+		err("peek2_stack: Stack underflow\n");
+		return (0);
+	}
+	return (s->val[s->size - 2]);
 }
