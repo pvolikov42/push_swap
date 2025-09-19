@@ -22,7 +22,6 @@ void	sip_approach(t_stackf *aa, t_stackf *bb)
 	int	pos;
 	int	dir;
 
-	counter = 0;
 	i = aa->stk->size - 1;
 	while (i >= 0)
 	{

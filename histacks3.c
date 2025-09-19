@@ -16,11 +16,14 @@
 
 int	xpush(t_stackf *dst, t_stackf *src)
 {
-	ft_d("+");
-	ft_putstr("p");
-	ft_putchar(dst->id);
-	ft_d2(" ", peekidx(src));
-	ft_putendl("");
+	if (dst->id == 'a' || dst->id == 'b' || DEBUG > 0)
+	{
+		ft_d("+");
+		ft_putstr("p");
+		ft_putchar(dst->id);
+		ft_d2(" ", peekidx(src));
+		ft_putendl("");
+	}
 	xpush_stack(dst->stk, src->stk);
 	xpush_stack(dst->idx, src->idx);
 	return (1);
@@ -28,19 +31,25 @@ int	xpush(t_stackf *dst, t_stackf *src)
 
 int	rot(t_stackf *s)
 {
-	ft_d("+");
-	ft_putstr("r");
-	ft_putchar(s->id);
-	ft_putendl("");
+	if (s->id == 'a' || s->id == 'b' || DEBUG > 0)
+	{
+		ft_d("+");
+		ft_putstr("r");
+		ft_putchar(s->id);
+		ft_putendl("");
+	}
 	return (rot_stack(s->stk) && rot_stack(s->idx));
 }
 
 int	rrot(t_stackf *s)
 {
-	ft_d("+");
-	ft_putstr("rr");
-	ft_putchar(s->id);
-	ft_putendl("");
+	if (s->id == 'a' || s->id == 'b' || DEBUG > 0)
+	{
+		ft_d("+");
+		ft_putstr("rr");
+		ft_putchar(s->id);
+		ft_putendl("");
+	}
 	return (rrot_stack(s->stk) && rrot_stack(s->idx));
 }
 
