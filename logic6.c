@@ -16,7 +16,7 @@
 
 static void	optimized_2_1_fetch(t_stackf *s1, t_stackf *s2, int index, int dir)
 {
-	ft_d("_optimizing..\n");
+	ft_d("_2_1_optimizing..\n");
 	goto_el(s1, index + dir);
 	xpush(s2, s1);
 	goto_el(s1, index);

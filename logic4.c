@@ -18,7 +18,7 @@ static void	report_divsip_params(char *label, int min, int max)
 {
 	ft_d("_divsip ");
 	ft_d(label);
-	ft_d2(": nonopt: min=", min);
+	ft_d2(": params: min=", min);
 	ft_d3(" max=", max, "\n");
 }
 
@@ -65,8 +65,8 @@ int	divide_n_sip_cr(t_stackf *aa, t_stackf *bb, int min, int max)
 		workleft = size_stk(bb) - num; //unsorted volume
 		report_divsip_nonopt("cr", num, workleft, thr);
 		num = num - ndump_lower(bb, aa, thr + 1, num); //remaining volume
+		conditional_backtrack(bb, num, workleft);
 		divide_n_sip_cl(aa, bb, min, thr);
-		conditional_backtrack(aa, num, workleft);
 		divide_n_sip_cr(aa, bb, thr + 1, max);
 	}
 	return (1);
@@ -74,7 +74,7 @@ int	divide_n_sip_cr(t_stackf *aa, t_stackf *bb, int min, int max)
 
 int	divide_n_sip_cl(t_stackf *aa, t_stackf *bb, int min, int max)
 // aa is sorted until min and has a chunk of unsorted
-// from min to max
+// from min to max on the top
 // bb is unsorted but all above max
 {
 	long int	chunk;
