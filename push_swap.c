@@ -16,8 +16,6 @@
 #include "libft/libft.h"
 #include "push_swap.h"
 
-
-
 int	input_vals(char **argv, t_stack *s)
 {
 	t_stack	tmp;
@@ -32,7 +30,7 @@ int	input_vals(char **argv, t_stack *s)
 		if (ft_strncmp(str, *argv, ft_strlen(*argv)) != 0)
 		{
 			err("Error\n");
-			return(free((void *)str), 0);
+			return (free((void *)str), 0);
 		}
 		free((void *)str);
 		push_stack(&tmp, val);
@@ -45,29 +43,31 @@ int	input_vals(char **argv, t_stack *s)
 
 int	main(int argc, char **argv)
 {
-	t_stack	a;
-	t_stack	b;
-	t_stack	ai;
-	t_stack	bi;
-	t_stackf aa;
-	t_stackf bb;
+//	t_stack	a;
+//	t_stack	b;
+//	t_stack	ai;
+//	t_stack	bi;
+	t_stackf	*aa;
+	t_stackf	*bb;
 
 	if (argc < 2)
 		return (ft_putstr("Error\n"), 1);
-	init_stack(&a);
-	init_stack(&b);
-	init_stk(&aa, &a, &ai, 'a');
-	init_stk(&bb, &b, &bi, 'b');
-	if (! input_vals(++argv, &a))
+//	init_stack(&a);
+//	init_stack(&b);
+	aa = create_stk();
+	bb = create_stk();
+	init_stk(aa, 'a');
+	init_stk(bb, 'b');
+	if (! input_vals(++argv, aa->stk))
 		return (ft_putstr("Error\n"), 2);
-	mkidx(&aa);
+	mkidx(aa);
 	ft_d("Start a:\n");
-	print_stk(&aa);
+	print_stk(aa);
 	ft_d("Start b:\n");
-	print_stk(&bb);
+	print_stk(bb);
 //	find_solution(&a, &b);
 //	find_solution2(&aa, &bb);
-	find_solution9(&aa, &bb);
+	find_solution9(aa, bb);
 /*    mkidx(&aa);
 	print_stk(&aa);
 	print_stk(&bb);
@@ -78,9 +78,9 @@ int	main(int argc, char **argv)
 	print_stk(&aa);
 	rot(&aa); */
 	ft_d("Finish \n");
-	print_stk(&aa);
+	print_stk(aa);
 	//ft_putendl("Finish b: ");
-	print_stk(&bb);
-	ft_d3("finish score: ", wrongdir_rank(&aa, &bb), "\n");
-	return (0);
+	print_stk(bb);
+	ft_d3("finish score: ", wrongdir_rank(aa, bb), "\n");
+	return (release_stk(aa), release_stk(bb), 0);
 }

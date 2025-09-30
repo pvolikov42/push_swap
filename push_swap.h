@@ -53,7 +53,8 @@ int		count_monotonic_sequences(const t_stack *s);
 
 t_stackf	*create_stk(void);
 t_stackf	*dup_stk(const t_stackf *src);
-void	init_stk(t_stackf *s, t_stack *stk, t_stack *idx, char id);
+//void	init_stk(t_stackf *s, t_stack *stk, t_stack *idx, char id);
+void	init_stk(t_stackf *s, char id);
 void	release_stk(t_stackf *s);
 void	print_stk(const t_stackf *s);
 int		size_stk(const t_stackf *s);

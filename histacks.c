@@ -27,12 +27,19 @@ t_stackf	*create_stk(void)
 	return (s);
 }
 
-void	init_stk(t_stackf *s, t_stack *stk, t_stack *idx, char id)
+/*void	init_stk(t_stackf *s, t_stack *stk, t_stack *idx, char id)
 {
 	init_stack(stk);
 	s->stk = stk;
 	init_stack(idx);
 	s->idx = idx;
+	s->id = id;
+}*/
+
+void	init_stk(t_stackf *s, char id)
+{
+	init_stack(s->stk);
+	init_stack(s->idx);
 	s->id = id;
 }
 
