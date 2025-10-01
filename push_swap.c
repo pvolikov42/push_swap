@@ -43,17 +43,11 @@ int	input_vals(char **argv, t_stack *s)
 
 int	main(int argc, char **argv)
 {
-//	t_stack	a;
-//	t_stack	b;
-//	t_stack	ai;
-//	t_stack	bi;
 	t_stackf	*aa;
 	t_stackf	*bb;
 
 	if (argc < 2)
 		return (ft_putstr("Error\n"), 1);
-//	init_stack(&a);
-//	init_stack(&b);
 	aa = create_stk();
 	bb = create_stk();
 	init_stk(aa, 'a');
@@ -65,21 +59,9 @@ int	main(int argc, char **argv)
 	print_stk(aa);
 	ft_d("Start b:\n");
 	print_stk(bb);
-//	find_solution(&a, &b);
-//	find_solution2(&aa, &bb);
 	find_solution9(aa, bb);
-/*    mkidx(&aa);
-	print_stk(&aa);
-	print_stk(&bb);
-	rrot(&aa);
-	xpush(&bb, &aa);
-	xpush(&bb, &aa);
-	rot(&aa);
-	print_stk(&aa);
-	rot(&aa); */
 	ft_d("Finish \n");
 	print_stk(aa);
-	//ft_putendl("Finish b: ");
 	print_stk(bb);
 	ft_d3("finish score: ", wrongdir_rank(aa, bb), "\n");
 	return (release_stk(aa), release_stk(bb), 0);

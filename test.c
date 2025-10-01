@@ -23,12 +23,11 @@ void	ft_test(int res)
 
 void	test_nonascention(void)
 {
-	int	a0[]={0, 1, 4, 5, 8};
-	int	a1[]={1, 5, 4, 8, 0};
-	int	a2[]={0, 1, 4, 8, 5};
-	int	a3[]={10, 1, 4, 8, 5};
-	int	a4[]={0, 1, 4, 4, 8, 8};
-
+	int	a0[] = {0, 1, 4, 5, 8};
+	int	a1[] = {1, 5, 4, 8, 0};
+	int	a2[] = {0, 1, 4, 8, 5};
+	int	a3[] = {10, 1, 4, 8, 5};
+	int	a4[] = {0, 1, 4, 4, 8, 8};
 
 	ft_putendl("Testing nonascention()...");
 	ft_putstr("1:");
@@ -46,11 +45,11 @@ void	test_nonascention(void)
 
 void	test_nondescention(void)
 {
-	int	a0[]={0, 1, 4, 5, 8};
-	int	a1[]={1, 5, 4, 8, 0};
-	int	a2[]={0, 1, 4, 8, 5};
-	int	a3[]={10, 1, 4, 8, 5};
-	int	a4[]={10, 10, 4, 4, 2, 0};
+	int	a0[] = {0, 1, 4, 5, 8};
+	int	a1[] = {1, 5, 4, 8, 0};
+	int	a2[] = {0, 1, 4, 8, 5};
+	int	a3[] = {10, 1, 4, 8, 5};
+	int	a4[] = {10, 10, 4, 4, 2, 0};
 
 
 	ft_putendl("Testing nondescention()...");
