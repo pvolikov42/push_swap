@@ -13,6 +13,7 @@
 #include "utils.h"
 #include "libft/libft.h"
 #include "push_swap.h"
+#include <stdio.h>
 
 static void	optimized_2_1_fetch(t_stackf *s1, t_stackf *s2, int index, int dir)
 {
@@ -47,7 +48,8 @@ int	sip_range_optm(t_stackf *s1, t_stackf *s2, int min, int max)
 			i--;
 			continue ;
 		}
-		ft_d3("_sip_opt_round. index=", i, "\n");
+//		printf("i=%d;%d|", i, is_sorted(s1->idx->val, i - min + 1)); fflush(stdout);
+		if (is_seq_sorted(s1->idx->val, i - min + 1, min))	break ;
 		if (i - min > 1 && is_sip_2step_optimizable(s1, i))
 		{
 			optimized_2_1_fetch(s1, s2, i, -1);
@@ -61,6 +63,7 @@ int	sip_range_optm(t_stackf *s1, t_stackf *s2, int min, int max)
 	}
 	return (counter);
 }
+//ft_d3("_sip_opt_round. index=", i, "\n");
 
 int	rsip_range_optm(t_stackf *s1, t_stackf *s2, int min, int max)
 // same as rsip_range but optimized to look one step ahead

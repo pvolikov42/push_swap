@@ -95,3 +95,19 @@ int	is_rev_sorted(const int *arr, int n)
 	}
 	return (1);
 }
+
+int	is_seq_sorted(const int *arr, int n, int start)
+// check for ascending order
+{
+	int	i;
+
+	i = start;
+	while (i < start + n - 1)
+	{
+		if (arr[i] > arr[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+

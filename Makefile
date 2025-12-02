@@ -62,6 +62,9 @@ re : fclean all
 #	$(CC) $(CFLAGS) -o test test.c $(OBJS) -Llibft -lft
 #	./test
 
+sample5:
+	shuf -i 0-9999 -n 5 |tr '\n' ' ' > $@
+
 sample10:
 	shuf -i 0-9999 -n 10 |tr '\n' ' ' > $@
 

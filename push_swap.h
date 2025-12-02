@@ -97,6 +97,7 @@ int			is_sip_2step_optimizable(t_stackf *s, int idx);
 int			is_rsip_2step_optimizable(t_stackf *s, int idx);
 
 int			is_sorted(const int *arr, int n);
+int			is_seq_sorted(const int *arr, int n, int start);
 int			is_rev_sorted(const int *arr, int n);
 int			nonascention(const int *arr, int n);
 int			nondescention(const int *arr, int n);
