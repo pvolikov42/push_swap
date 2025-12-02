@@ -6,7 +6,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 # MODS = push_swap 
 MODS = logic1 logic2 logic3 logic4 logic5 logic6 \
-		stacks stacks1 stacks2 \
+		stacks stacks1 stacks2 stacks3 \
 		histacks histacks1 histacks2 histacks3 histacks4 \
 		hiops hiops1 hiops2 hiops3\
 		sort sort1 sort2 \
@@ -21,13 +21,19 @@ MODS = logic1 logic2 logic3 logic4 logic5 logic6 \
 OBJS = $(addsuffix .o,$(MODS))
 TGT = push_swap
 
+LIBFT_DIR = libft
+LIBFT_A = $(LIBFT_DIR)/libft.a
+
 .PHONY:	all clean fclean re test
 all :	$(TGT)
 
-$(TGT): $(OBJS) $(TGT).o
+$(TGT): $(LIBFT_A) $(OBJS) $(TGT).o
 #	$(CC) $(CFLAGS) -c $@.c -o $@ $< -Llibft -lft
 	$(CC) $(CFLAGS) -o $@ $(TGT).o $(OBJS) -Llibft -lft
 	
+$(LIBFT_A):	
+	make -C $(LIBFT_DIR) 
+
 %.o: %.c *.h 
 #	cd libft; make
 #	$(CC) $(CFLAGS) -c $@.c -o $@ $< -Llibft -lft
@@ -43,13 +49,24 @@ $(TGT): $(OBJS) $(TGT).o
 #	$(CC) -c $(CFLAGS) $< -o $@
 
 clean :
-	rm -f $(TGT)
+	make -C $(LIBFT_DIR) clean
+	rm -f *.o
 
 fclean : clean
-	rm -f *.o
+	make -C $(LIBFT_DIR) fclean
+	rm -f $(TGT)
 
 re : fclean all
 
-test: $(OBJS)
-	$(CC) $(CFLAGS) -o test test.c $(OBJS) -Llibft -lft
-	./test
+#test: $(OBJS)
+#	$(CC) $(CFLAGS) -o test test.c $(OBJS) -Llibft -lft
+#	./test
+
+sample10:
+	shuf -i 0-9999 -n 10 |tr '\n' ' ' > $@
+
+sample100:
+	shuf -i 0-9999 -n 100 |tr '\n' ' ' > $@
+
+sample500:
+	shuf -i 0-9999 -n 500 |tr '\n' ' ' > $@

@@ -50,6 +50,7 @@ int			rrot_stack(t_stack *s);
 int			swap_stack(t_stack *s);
 int			zero_stack(t_stack *s);
 int			count_monotonic_sequences(const t_stack *s);
+int			findval_stack(int val, const t_stack *s);
 
 t_stackf	*create_stk(void);
 t_stackf	*dup_stk(const t_stackf *src);

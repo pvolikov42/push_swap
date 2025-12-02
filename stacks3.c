@@ -1,49 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   stacks3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/08 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Created: 2025/09/07 20:17:33 by pvolikov          #+#    #+#             */
+/*   Updated: 2025/09/18 20:19:29 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "utils.h"
 #include "libft/libft.h"
+#include "push_swap.h"
 
-void	debug(char *s)
+int	findval_stack(int val, const t_stack *s)
 {
-	printf("DEBUG: %s", s);
-}
+	int	i;
 
-void	err(char *s)
-{
-	ft_putstr_fd(s, 2);
-}
-
-void	ft_d(char *s)
-{
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s);
-}
-
-void	ft_d2(char *s, int num)
-{
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s);
-	ft_putnbr(num);
-}
-
-void	ft_d3(char *s1, int num, char *s3)
-{
-	if (DEBUG == 0)
-		return ;
-	ft_putstr(s1);
-	ft_putnbr(num);
-	ft_putstr(s3);
+	i = 0;
+	while (i < s->size)
+	{
+		if (val == s->val[i])
+			return (i);
+		i++;
+	}
+	return (-1);
 }

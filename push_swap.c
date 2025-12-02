@@ -33,6 +33,8 @@ int	input_vals(char **argv, t_stack *s)
 			return (free((void *)str), 0);
 		}
 		free((void *)str);
+		if (findval_stack(val, &tmp) != -1)
+			return (err("Error\n"), 0);
 		push_stack(&tmp, val);
 		argv++;
 	}
@@ -46,14 +48,14 @@ int	main(int argc, char **argv)
 	t_stackf	*aa;
 	t_stackf	*bb;
 
-	if (argc < 2)
-		return (ft_putstr("Error\n"), 1);
+	if (argc == 1)
+		return (0);
 	aa = create_stk();
 	bb = create_stk();
 	init_stk(aa, 'a');
 	init_stk(bb, 'b');
 	if (! input_vals(++argv, aa->stk))
-		return (ft_putstr("Error\n"), 2);
+		return (release_stk(aa), release_stk(bb), 2);
 	mkidx(aa);
 	ft_d("Start a:\n");
 	print_stk(aa);
