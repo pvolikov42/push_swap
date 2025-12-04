@@ -6,7 +6,7 @@
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/07 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Updated: 2025/12/04 15:32:12 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,12 @@ int	is_rev_sorted(const int *arr, int n)
 
 int	is_seq_sorted(const int *arr, int n, int start)
 // check for ascending order
+// n = number of meaningful elements in the array
 {
 	int	i;
 
 	i = start;
-	while (i < start + n - 1)
+	while (i < n - 1)
 	{
 		if (arr[i] > arr[i + 1])
 			return (0);

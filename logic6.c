@@ -6,7 +6,7 @@
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/18 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:27:24 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,20 @@ int	sip_range_optm(t_stackf *s1, t_stackf *s2, int min, int max)
 	i = max;
 	while (i >= min)
 	{
+		ft_d("_sip_round\n");
 		if (find_value(i, s1->idx->val, s1->idx->size) == -1)
 		{
 			i--;
 			continue ;
 		}
 //		printf("i=%d;%d|", i, is_sorted(s1->idx->val, i - min + 1)); fflush(stdout);
-		if (is_seq_sorted(s1->idx->val, i - min + 1, min))	break ;
+		if (is_perfect_seq(s1, i, min))
+		{
+			ft_d3("_sip_range_optm: should already sorted up to i=", i, "\n");
+			ft_d3("_min=", min, "\n");
+			print_stk(s1);
+			break ;
+		}
 		if (i - min > 1 && is_sip_2step_optimizable(s1, i))
 		{
 			optimized_2_1_fetch(s1, s2, i, -1);

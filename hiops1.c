@@ -6,7 +6,7 @@
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/18 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Updated: 2025/12/03 17:24:55 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	wrongdir_rank(t_stackf *aa, t_stackf *bb)
 {
 	int	res;
 
+	res = 0;
 	if (size_stk(aa) > 0)
 		res = nondescention(aa->stk->val, size_stk(aa));
 	if (size_stk(bb) > 0)

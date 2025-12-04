@@ -37,7 +37,7 @@ $(LIBFT_A):
 %.o: %.c *.h 
 #	cd libft; make
 #	$(CC) $(CFLAGS) -c $@.c -o $@ $< -Llibft -lft
-	$(CC) $(CFLAGS) -c $< -Llibft -lft
+	$(CC) $(CFLAGS) -c $< 
 
 # libft.a :	$(OBJS)
 #	ar rcs libft.a $(OBJS)

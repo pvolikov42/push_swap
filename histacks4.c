@@ -6,7 +6,7 @@
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/18 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Updated: 2025/12/04 15:31:35 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,26 @@ int	ndump(t_stackf *src, t_stackf *dst, int num)
 		i++;
 	}
 	return (i);
+}
+
+int is_perfect_seq(const t_stackf *s, int start, int end)
+{
+	int	i;
+	int	inc;
+
+	i = 0;
+	inc = (end >= start) * 2 - 1;
+	ft_d2("_is_perfect_seq: checking seq from start=", start);
+	ft_d2(" with size=", s->stk->size);
+	ft_d3(" to end=", end, "\n");
+	while (i < s->stk->size && (end - start) * inc >= 0)
+	{
+		ft_d2("_perf_index=", i);
+		ft_d3(" curval=", start, "\n");
+		if (s->idx->val[s->stk->size - 1 - i] != start)
+			return (0);
+		i++;
+		start += inc;
+	}
+	return (1);
 }

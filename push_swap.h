@@ -6,7 +6,7 @@
 /*   By: pvolikov <pvolikov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 20:17:33 by pvolikov          #+#    #+#             */
-/*   Updated: 2025/09/06 20:19:29 by pvolikov         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:30:01 by pvolikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int			rrot2(t_stackf *s1, t_stackf *s2);
 int			swap2(t_stackf *s1, t_stackf *s2);
 int			dump(t_stackf *src, t_stackf *dst);
 int			ndump(t_stackf *src, t_stackf *dst, int num);
+int			is_perfect_seq(const t_stackf *s, int start, int end);
 
 int			dump_second_half(t_stackf *src, t_stackf *dst);
 int			dump_higher(t_stackf *src, t_stackf *dst, int threshold);
